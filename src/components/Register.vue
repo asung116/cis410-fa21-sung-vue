@@ -60,42 +60,17 @@
           v-model="password"
         />
       </div>
-
-      <div>
-        <p>
-          You may only register your household once. If you already have a
-          household code, please enter your household code. If you do not have a
-          household, please enter your household name.
-        </p>
-
-        <!-- <button id="demo">try</button>
-
-        <div id="hasHousehold"><p>has household</p></div>
-        <div id="needHousehold"><p>need household</p></div> -->
-        <div class="mb-3">
-          <label for="householdCode-input" class="form-label"
-            >Household Code</label
-          ><input
-            type="text"
-            class="form-control"
-            id="householdCode-input"
-            placeholder="If you have a Household CODE enter it here"
-            required=""
-            v-model="text"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="householdName-input" class="form-label"
-            >Household Name</label
-          ><input
-            type="text"
-            class="form-control"
-            id="householdName-input"
-            placeholder="If you DO NOT have a household CODE, enter your Household NAME here"
-            required=""
-            v-model="text"
-          />
-        </div>
+      <div class="mb-3">
+        <label for="householdCode-input" class="form-label"
+          >Household Code</label
+        ><input
+          type="text"
+          class="form-control"
+          id="householdCode-input"
+          placeholder="Household Code"
+          required=""
+          v-model="householdCode"
+        />
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
       <p id="error-signup" class="text-danger">{{ errorMessage }}</p>
@@ -113,8 +88,6 @@ export default {
       phone: "",
       email: "",
       password: "",
-      householdCode: "",
-      householdName: "",
       errorMessage: "",
       dupEmail: false,
     };
@@ -128,6 +101,7 @@ export default {
         phone: this.phone,
         email: this.email,
         password: this.password,
+        householdPK: this.householdPK,
       };
       //console.log(myFormData);
       axios
@@ -146,18 +120,6 @@ export default {
     },
   },
 };
-// document.getElementById("demo").addEventListener("click", myFunction());
-// function myFunction() {
-//   let has = document.getElementById("hasHousehold");
-//   let need = document.getElementById("needHousehold");
-//   if (has.style.display === "none") {
-//     has.style.display = "block";
-//     need.style.display = "none";
-//   } else {
-//     has.style.display = "none";
-//     need.style.display = "block";
-//   }
-// }
 </script>
 
 <style></style>

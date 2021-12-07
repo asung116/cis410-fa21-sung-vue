@@ -9,3 +9,6 @@ export default {};
 </script>
 
 <style></style>
+
+<!-- to start running it, do this code: 
+npm run serve-->
