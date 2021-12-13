@@ -11,3 +11,6 @@ const myApp = createApp(App);
 myApp.use(myRouter);
 myApp.use(theStore);
 myApp.mount("#app");
+
+// to start the local host: npm run serve
+// to run the server: npm run build

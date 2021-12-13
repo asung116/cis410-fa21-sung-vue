@@ -17,6 +17,13 @@ export default {
   components: {
     "my-header": Header,
   },
+  create() {
+    this.$store.dispatch("getChores");
+    this.$store.dispatch("getRoommates");
+    this.$store.dispatch("getNeeds");
+    this.$store.dispatch("getEvents");
+    this.$store.dispatch("getHousehold");
+  },
 };
 </script>
 

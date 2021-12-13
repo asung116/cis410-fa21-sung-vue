@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Signup</h1>
+    <h1>Household Signup</h1>
     <form @submit.prevent="onSubmit">
       <div class="mb-3">
         <label for="household-input" class="form-label">Household Name</label

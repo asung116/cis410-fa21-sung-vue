@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Not Found</h1>
-    <h4>Sorry, this page ca't be found.</h4>
+    <h4>Sorry, this page can't be found.</h4>
   </div>
 </template>
 

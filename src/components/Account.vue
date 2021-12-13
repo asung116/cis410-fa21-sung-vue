@@ -12,7 +12,7 @@
 
     <br />
     <h4>Roommates</h4>
-    <table v-if="householdInfo" class="table">
+    <!-- <table v-if="householdInfo" class="table">
       <thead>
         <th>First Name</th>
         <th>Last Name</th>
@@ -33,7 +33,7 @@
           <th>{{ thisRoommate.Email }}</th>
         </tr>
       </tbody>
-    </table>
+    </table> -->
   </div>
 </template>
 
@@ -42,13 +42,13 @@ import axios from "axios";
 export default {
   data() {
     return {
-      householdInfo: null,
+      userInfo: null,
       accountError: false,
     };
   },
   computed: {
     firstName() {
-      console.log("here is the store so far", this.$store.state);
+      //console.log("here is the store so far", this.$store.state);
       return this.$store.state.user.FirstName;
       // How do I get the household info and the roommate info from the HouseholdFK that is returned?
     },
@@ -61,8 +61,8 @@ export default {
         },
       })
       .then((theResponse) => {
-        console.log("here is the response", theResponse);
-        this.householdInfo = theResponse.data;
+        //console.log("here is the response", theResponse);
+        this.userInfo = theResponse.data;
       });
     // .catch(() => {
     //   this.accountError = true;
