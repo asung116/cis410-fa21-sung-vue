@@ -4,36 +4,30 @@
     <hr />
     <h3>{{ firstName }}'s Household</h3>
 
-    <!-- <p v-if="accountError" class="text-danger">
+    <p v-if="accountError" class="text-danger">
       Cannot get your account information, please try again later.
-    </p> -->
+    </p>
     <!-- {{householdPK}} where "Household Code" is -->
-    <h5>Household Code: Household Code</h5>
+    <h5>Household Code: {{ houseCode }}</h5>
 
     <br />
     <h4>Roommates</h4>
-    <!-- <table v-if="householdInfo" class="table">
+    <table class="table">
       <thead>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Email</th>
+        <th>Roommate Code</th>
       </thead>
       <tbody>
-        <tr
-          v-for="thisHousehold in householdInfo"
-          :key="thisHousehold.householdPK"
-        >
-          <th>
-            <router-link :to="`/roommate/${thisRoommate.HouseholdFK}`">{{
-              thisRoommate.LastName
-            }}</router-link>
-          </th>
+        <tr v-for="thisRoommate in roommates" :key="thisRoommate.RoommatePK">
           <th>{{ thisRoommate.FirstName }}</th>
           <th>{{ thisRoommate.LastName }}</th>
           <th>{{ thisRoommate.Email }}</th>
+          <th>{{ thisRoommate.RoommatePK }}</th>
         </tr>
       </tbody>
-    </table> -->
+    </table>
   </div>
 </template>
 
@@ -43,14 +37,18 @@ export default {
   data() {
     return {
       userInfo: null,
+      roommates: null,
       accountError: false,
     };
   },
   computed: {
     firstName() {
-      //console.log("here is the store so far", this.$store.state);
+      console.log("here is the store so far", this.$store.state);
       return this.$store.state.user.FirstName;
       // How do I get the household info and the roommate info from the HouseholdFK that is returned?
+    },
+    houseCode() {
+      return this.$store.state.user.HouseholdFK;
     },
   },
   created() {
@@ -61,12 +59,23 @@ export default {
         },
       })
       .then((theResponse) => {
-        //console.log("here is the response", theResponse);
+        console.log("user info", theResponse);
         this.userInfo = theResponse.data;
+      })
+      .catch(() => {
+        this.accountError = true;
       });
-    // .catch(() => {
-    //   this.accountError = true;
-    // });
+
+    axios
+      .get("/myroommates", {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.token}`,
+        },
+      })
+      .then((myResponse) => {
+        console.log("my roommates", myResponse);
+        this.roommates = myResponse.data;
+      });
   },
 };
 </script>

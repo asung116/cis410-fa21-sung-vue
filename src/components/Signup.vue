@@ -131,17 +131,39 @@ export default {
   methods: {
     onSubmit() {
       // console.log("form submitted");
-      if (this.householdCode == "") {
+      if (!this.householdCode) {
         const myHousehold = {
           householdName: this.householdName,
           address: this.address,
         };
         console.log("my household", myHousehold);
-        axios.post("/household", myHousehold).then((theResponse) => {
+        axios.post("/createhousehold", myHousehold).then((theResponse) => {
           console.log("household Response", theResponse);
+          const formData = {
+            nameFirst: this.nameFirst,
+            nameLast: this.nameLast,
+            phone: this.phone,
+            email: this.email,
+            password: this.password,
+            householdCode: theResponse.data[0].HouseholdPK,
+          };
+          console.log("formData", formData);
+          axios
+            .post("/roommate", formData)
+            .then((myResponse) => {
+              console.log("the response", myResponse);
+              this.$router.replace("/login?signupsuccess=true");
+            })
+            .catch((myError) => {
+              if (myError.response.status === 409) {
+                this.dupEmail = true;
+              } else {
+                this.errorMessage =
+                  "Cannot sign you up, please try again later";
+              }
+            });
         });
-      }
-      if (this.householdName == "") {
+      } else if (!this.householdName) {
         const myFormData = {
           nameFirst: this.nameFirst,
           nameLast: this.nameLast,
