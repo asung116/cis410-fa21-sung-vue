@@ -65,10 +65,9 @@ export default {
       axios
         .post("/roommate/login", myFormData)
         .then((myResponse) => {
-          console.log("the response", myResponse);
+          console.log("the response from Login", myResponse);
           this.$store.commit("storeTokenInApp", myResponse.data.token);
           this.$store.commit("storeUserInApp", myResponse.data.user);
-
           this.$router.replace("/account");
         })
         .catch((myError) => {

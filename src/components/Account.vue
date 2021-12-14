@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     firstName() {
-      console.log("here is the store so far", this.$store.state);
+      console.log("here is the store so far from Account", this.$store.state);
       return this.$store.state.user.FirstName;
       // How do I get the household info and the roommate info from the HouseholdFK that is returned?
     },
@@ -59,7 +59,7 @@ export default {
         },
       })
       .then((theResponse) => {
-        console.log("user info", theResponse);
+        console.log("user info from Account", theResponse);
         this.userInfo = theResponse.data;
       })
       .catch(() => {
@@ -73,9 +73,12 @@ export default {
         },
       })
       .then((myResponse) => {
-        console.log("my roommates", myResponse);
+        console.log("my roommates from Account", myResponse);
         this.roommates = myResponse.data;
       });
+  },
+  create() {
+    this.$store.dispatch("getChores");
   },
 };
 </script>
