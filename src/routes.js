@@ -11,6 +11,8 @@ import NeedCreate from "./components/NeedCreate.vue";
 import Needs from "./components/Needs.vue";
 import NotFound from "./components/NotFound.vue";
 import Signup from "./components/Signup.vue";
+import ChoreDetail from "./components/ChoreDetail.vue";
+import ChoreCreate from "./components/ChoreCreate.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -18,6 +20,9 @@ const router = createRouter({
     {path: "/", component: Home},
     {path: "/account", component: Account},
     {path: "/chores", component: Chores},
+    {path: "/chores/:pk", component: ChoreDetail},
+    {path: "/choreCreate", component: ChoreCreate},
+
     {path: "/dashboard", component: Dashboard},
     {
       path: "/events",

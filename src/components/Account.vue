@@ -12,7 +12,7 @@
 
     <br />
     <h4>Roommates</h4>
-    <table class="table">
+    <table v-if="roommates" class="table">
       <thead>
         <th>First Name</th>
         <th>Last Name</th>

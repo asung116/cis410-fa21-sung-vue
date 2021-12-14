@@ -19,6 +19,7 @@ export default {
   },
   create() {
     this.$store.dispatch("getRoommates");
+    this.$store.dispatch("getChores");
   },
 };
 </script>

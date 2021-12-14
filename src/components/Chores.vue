@@ -7,27 +7,20 @@
         <tr>
           <th>Chore</th>
           <th>Assigned To</th>
-          <th>Description</th>
           <th>Due Date</th>
-          <th>Completion</th>
-          <th>Completed By</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <!-- v-for="aChore in theChores" :key="aChore.ChorePK" -->
-          <!-- <th>{{ aChore.Chore }}</th>
-          <th>{{ aChore.AssignedTo }}</th>
-          <th>{{ aChore.ChoreDescription }}</th>
-          <th>{{ aChore.DueDate }}</th>
-          <th>{{ aChore.Completion }}</th>
-          <th>{{ aChore.CompletedBy }}</th> -->
-          <th>imagine if this actually worked</th>
-          <th>why won't it work?</th>
-          <th>I really wish i knew the answer</th>
-          <th>but alas I do not</th>
-          <th>this makes no sense</th>
-          <th>i might have to give up on this b4 i lose my mind</th>
+        <tr v-for="thisChore in chores" :key="thisChore.ChorePK">
+          <th>{{ thisChore.Chore }}</th>
+          <th>{{ thisChore.AssignedTo }}</th>
+          <th>{{ thisChore.DueDate }}</th>
+          <th>
+            <router-link :to="`/chores/${thisChore.ChorePK}`"
+              ><button class="btn btn-primary">Details</button></router-link
+            >
+          </th>
         </tr>
       </tbody>
     </table>
@@ -35,12 +28,30 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
+  data() {
+    return {
+      chores: null,
+    };
+  },
   // computed: {
   //   theChores() {
   //     return this.$store.state.chores;
   //   },
   // },
+  created() {
+    axios
+      .get("/chores/household", {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.token}`,
+        },
+      })
+      .then((myResponse) => {
+        console.log("house chores", myResponse);
+        this.chores = myResponse.data;
+      });
+  },
 };
 </script>
 

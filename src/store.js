@@ -1,11 +1,11 @@
 import {createStore} from "vuex";
-import axios from "axios";
+// import axios from "axios";
 
 export default createStore({
   state: {
     token: null,
     user: null,
-    tasks: [],
+    // chores: [],
   },
   mutations: {
     storeTokenInApp(state, myToken) {
@@ -14,15 +14,24 @@ export default createStore({
     storeUserInApp(state, theUser) {
       state.user = theUser;
     },
+    // storeChores(state, chores) {
+    //   state.chores = chores;
+    // },
   },
 
   actions: {
-    getRoommates() {
-      axios.get("/myroommates").then((aResponse) => {
-        console.log("response in /roommates/:pk", aResponse);
-        //commit("storeChores", aResponse.data);
-      });
-    },
+    // getChores({commit}) {
+    //   axios.get("/chores/household").then((aResponse) => {
+    //     console.log("response in /chores/household", aResponse);
+    //     commit("storeChores", aResponse.data);
+    //   });
+    // },
+    // getRoommates() {
+    //   axios.get("/myroommates").then((aResponse) => {
+    //     console.log("response in /roommates/:pk", aResponse);
+    //     commit("storeChores", aResponse.data);
+    //   });
+    // },
   },
 });
 //console.log("is this even working?");
