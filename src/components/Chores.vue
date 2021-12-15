@@ -2,9 +2,10 @@
   <div>
     <h1>Chores</h1>
     <hr />
-    <router-link :to="`/choreCreate`"
-      ><button class="btn btn-primary">Create a new chore</button></router-link
+    <router-link v-if="auth" :to="`/chores/choreCreate`"
+      ><button class="btn btn-success">Create a new chore</button></router-link
     >
+    <router-view />
     <table class="table">
       <thead>
         <tr>
@@ -38,11 +39,11 @@ export default {
       chores: null,
     };
   },
-  // computed: {
-  //   theChores() {
-  //     return this.$store.state.chores;
-  //   },
-  // },
+  computed: {
+    auth() {
+      return this.$store.state.token;
+    },
+  },
   created() {
     axios
       .get("/chores/household", {

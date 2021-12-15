@@ -84,4 +84,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+button {
+  margin-top: 10px;
+}
+</style>

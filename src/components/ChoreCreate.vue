@@ -57,7 +57,7 @@
             <label for="assignedToCode-input" class="form-label"
               >Assignment Code</label
             ><input
-              type="text"
+              type="number"
               class="form-control"
               id="assignedToCode-input"
               required=""
@@ -65,6 +65,9 @@
               v-model="assignedToCode"
             />
           </div>
+          <p v-if="errorMessage" class="form-text text-danger">
+            Please check that you have entered a valid roommate code.
+          </p>
           <div>
             <p class="roommates">Roommates</p>
             <table v-if="roommates" class="table">
@@ -90,12 +93,18 @@
 
         <button type="submit" class="btn btn-primary">Submit</button>
 
+        <router-link
+          class="btn btn-outline-danger"
+          aria-current="page"
+          to="/chores"
+          >Cancel</router-link
+        >
+
         <p v-if="credentialsError" class="form-text text-danger">
           Invalid credentials
         </p>
-        <p v-if="loginError" class="form-text text-danger">
-          Could not submit new chore. Please check that you have entered a valid
-          assignment code.
+        <p v-if="errorMessage" class="form-text text-danger">
+          Could not submit new chore, please try again later.
         </p>
       </form>
     </div>
@@ -118,43 +127,29 @@ export default {
         chore: this.chore,
         choreDesc: this.choreDescription,
         dueDate: this.dueDate,
-        roommateAssignment: this.assignedTo,
-        roommateSelect: this.assignedToName,
+        roommateAssignment: this.assignedToName,
+        roommateSelect: this.assignedTo,
       };
-      console.log("new chore: ", newChore);
-      // let status = false;
-      // this.$store.state.roommate.forEach(() => {
-      //   if (newChore.assignedTo == this.Store.state.roommate.RoommatePK) {
-      //     status = true;
-      //     console.log("roommate assignment: ", status);
-      //   } else {
-      //     console.log("roommate assignment: ", status);
-      //   }
-      // });
-
-      // for (let i = 0; i < this.$store.state.roommates.length; i++) {
-      // if (newChore.assignedTo == this.$store.state.roommates.RoommatePK) {
-      //   status = true;
-      //   console.log("roommate assignment: ", status);
-      //   break;
-      // } else {
-      //   status = false;
-      //   console.log("roommate assignment: ", status);
-      // }
-      //}
-      axios.post("/chorecreate", newChore).then((myResponse) => {
-        console.log("the response", myResponse);
-        //this.$router.replace("/login?signupsuccess=true");
-      });
-      // .catch((myError) => {
-      //   if (myError.response.status === 409) {
-      //     this.dupEmail = true;
-      //   } else {
-      //     this.errorMessage = "Could not submit new chore. Please check that you have entered a valid assignment code.";
-      //   }
-      // })
+      axios
+        .post("/chorecreate", newChore)
+        .then((myResponse) => {
+          console.log("the response", myResponse);
+          //this.$router.replace("/login?signupsuccess=true");
+        })
+        .catch((myError) => {
+          if (myError.response.status === 409) {
+            this.dupEmail = true;
+          } else {
+            this.errorMessage =
+              "Could not submit new chore. Please try again later";
+          }
+        });
+    },
+    cancelReview() {
+      this.$router.go(-1);
     },
   },
+
   computed: {
     firstName() {
       console.log("here is the store so far from Account", this.$store.state);
@@ -165,20 +160,6 @@ export default {
     },
   },
   created() {
-    axios
-      .get("/roommate/me", {
-        headers: {
-          Authorization: `Bearer ${this.$store.state.token}`,
-        },
-      })
-      .then((theResponse) => {
-        console.log("user info from Account", theResponse);
-        this.userInfo = theResponse.data;
-      })
-      .catch(() => {
-        this.accountError = true;
-      });
-
     axios
       .get("/myroommates", {
         headers: {
@@ -219,5 +200,8 @@ export default {
   font-size: 16px;
   margin: 5px;
   color: blue;
+}
+button {
+  margin-right: 5px;
 }
 </style>

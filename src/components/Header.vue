@@ -67,14 +67,29 @@
               </button></router-link
             >
           </li>
-          <li class="nav-item">
-            <button class="btn btn-warning">Logout</button>
+          <li v-if="auth" class="nav-item">
+            <button class="btn btn-warning" @click="onLogout">Logout</button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 </template>
+
+<script>
+export default {
+  computed: {
+    auth() {
+      return this.$store.state.token;
+    },
+  },
+  methods: {
+    onLogout() {
+      this.$store.dispatch("logout");
+    },
+  },
+};
+</script>
 
 <style scoped>
 .navbar-nav {

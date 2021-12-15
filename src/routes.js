@@ -19,9 +19,14 @@ const router = createRouter({
   routes: [
     {path: "/", component: Home},
     {path: "/account", component: Account},
-    {path: "/chores", component: Chores},
     {path: "/chores/:pk", component: ChoreDetail},
     {path: "/choreCreate", component: ChoreCreate},
+    {path: "/chores/:pk", component: ChoreDetail},
+    {
+      path: "/chores",
+      component: Chores,
+      children: [{path: "choreCreate", component: ChoreCreate}],
+    },
 
     {path: "/dashboard", component: Dashboard},
     {

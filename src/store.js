@@ -1,5 +1,6 @@
 import {createStore} from "vuex";
-//import axios from "axios";
+import axios from "axios";
+import myRoutes from "./routes.js";
 
 export default createStore({
   state: {
@@ -21,27 +22,27 @@ export default createStore({
     storeRoommates(state, roommates) {
       state.roommates = roommates;
     },
+    clearAuthData(state) {
+      state.token = null;
+      state.user = null;
+    },
   },
 
   actions: {
-    // getChores({commit}) {
-    //   axios
-    //     .get("/chores/household", {
-    //       headers: {
-    //         Authorization: `Bearer ${this.$store.state.token}`,
-    //       },
-    //     })
-    //     .then((aResponse) => {
-    //       console.log("response in /chores/household from store.js", aResponse);
-    //       commit("storeChores", aResponse.data);
-    //     });
-    // },
-    // getRoommates() {
-    //   axios.get("/myroommates").then((aResponse) => {
-    //     console.log("response in /roommates/:pk", aResponse);
-    //     commit("storeChores", aResponse.data);
-    //   });
-    // },
+    logout({commit, state}) {
+      axios
+        .post("/roommate/logout", null, {
+          headers: {Authorization: `Bearer ${state.token}`},
+        })
+        .then(() => {
+          commit("clearAuthData");
+          localStorage.clear("token");
+          localStorage.clear("expiration");
+          myRoutes.replace("/");
+        })
+        .catch(() => {
+          console.log("error in loggins out");
+        });
+    },
   },
 });
-//console.log("is this even working?");
