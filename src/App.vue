@@ -17,9 +17,9 @@ export default {
   components: {
     "my-header": Header,
   },
-  create() {
-    this.$store.dispatch("getRoommates");
-  },
+  // async create() {
+  //   await this.$store.dispatch("getChores");
+  // },
 };
 </script>
 

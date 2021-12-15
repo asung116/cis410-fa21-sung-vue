@@ -2,6 +2,9 @@
   <div>
     <h1>Chores</h1>
     <hr />
+    <router-link :to="`/choreCreate`"
+      ><button class="btn btn-primary">Create a new chore</button></router-link
+    >
     <table class="table">
       <thead>
         <tr>
@@ -48,8 +51,10 @@ export default {
         },
       })
       .then((myResponse) => {
+        this.$store.commit("storeChores", myResponse.data);
         console.log("house chores", myResponse);
         this.chores = myResponse.data;
+        console.log("here is the store so far from Chores", this.$store.state);
       });
   },
 };
